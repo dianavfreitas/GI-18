@@ -1,32 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
-const MovieDetail = () => {
+function Moviedetail() {
     const { id } = useParams();
     const [movie, setMovie] = useState(null);
 
     useEffect(() => {
-        const fetchMovie = async () => {
-            const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=3338d798e614564912c7dce6e7df7a93&query=${id}`);
-            const data = await response.json();
-            setMovie(data);
-        };
-        fetchMovie();
+        fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=1ee443d20a248d8d504075f63af53587`)
+            .then((response) => response.json())
+            .then((data) => {
+                setMovie(data);
+            })
+            .catch((error) => console.error("Error fetching movie details:", error));
     }, [id]);
 
+    if (!movie) return <div>Loading...</div>;
+
     return (
-        <div>
-            {movie ? (
-                <div>
-                    <h1>{movie.Title}</h1>
-                    <p>{movie.Plot}</p>
-                    <img src={movie.Poster} alt={movie.Title} />
-                </div>
-            ) : (
-                <p>Loading...</p>
+        <div className="movie-detail">
+            <h1>{movie.title}</h1>
+            {movie.poster_path && (
+                <img src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`} alt={movie.title} />
             )}
+            <p>{movie.overview}</p>
+            <p>Release Date: {movie.release_date}</p>
+            <p>Rating: {movie.vote_average}</p>
+            <Link to='/'><button id='return-btn'>return</button></Link>
         </div>
     );
-};
+}
 
-export default MovieDetail;
+export default Moviedetail;

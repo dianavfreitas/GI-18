@@ -17,7 +17,7 @@
 //MEDIUM
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './home';
+import Home from './movie';
 import MovieDetail from './moviedetail';
 
 function App() {
