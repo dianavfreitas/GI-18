@@ -7,7 +7,7 @@ const Home = () => {
 
     const searchMovies = async (e) => {
         e.preventDefault();
-        const response = await fetch(`http://www.omdbapi.com/?s=${query}&apikey=YOUR_API_KEY`);
+        const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=3338d798e614564912c7dce6e7df7a93&query=`);
         const data = await response.json();
         setMovies(data.Search || []);
     };
